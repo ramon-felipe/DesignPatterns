@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Iterator\" />
+    <Folder Include="Interpreter\" />
+    <Folder Include="Command\" />
+    <Folder Include="ChainOfResponsibility\" />
+    <Folder Include="Mediator\" />
+    <Folder Include="TemplateMethod\" />
+    <Folder Include="Observer\" />
+    <Folder Include="Strategy\" />
+    <Folder Include="State\" />
+    <Folder Include="Visitor\" />
+  </ItemGroup>
+
+</Project>

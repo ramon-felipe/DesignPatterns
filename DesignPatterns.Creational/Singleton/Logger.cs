@@ -14,12 +14,8 @@ namespace DesignPatterns.Creational.Singleton
 
         }
 
-        public static Logger GetInstance()
-        {
-            if (Instance == null)
-                return new Logger();
-
-            return Instance;
-        }
+        public static Logger GetInstance() 
+            => Instance ?? new Logger();
+        
     }
 }

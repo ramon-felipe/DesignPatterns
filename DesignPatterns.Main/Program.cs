@@ -1,5 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using DesignPatterns.Creational.Singleton;
+
+#region CREATIONAL
+
+#region SINGLETON
+/*using DesignPatterns.Creational.Singleton;
 
 Console.WriteLine("..::SINGLETON::..");
 
@@ -8,4 +12,20 @@ var logger2 = Logger.GetInstance();
 
 Console.WriteLine("logger1 hashcode: {0}", logger1.GetHashCode());
 Console.WriteLine("logger2 hashcode: {0}", logger2.GetHashCode());
-Console.WriteLine("logger1 == logger2 ? {0}", logger1.Equals(logger2));
+Console.WriteLine("logger1 == logger2 ? {0}", logger1.Equals(logger2));*/
+#endregion
+
+#region FACTORY METHOD
+
+using DesignPatterns.Creational.Factory;
+
+Console.WriteLine("..::FACTORY METHOD::..");
+
+var carFactory = new CarFactory();
+
+var couple = carFactory.Create(CarTypes.Couple);
+var sport = carFactory.Create(CarTypes.Sport);
+
+#endregion
+
+#endregion

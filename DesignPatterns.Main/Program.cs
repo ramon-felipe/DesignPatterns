@@ -17,14 +17,38 @@ Console.WriteLine("logger1 == logger2 ? {0}", logger1.Equals(logger2));*/
 
 #region FACTORY METHOD
 
-using DesignPatterns.Creational.Factory;
+/*using DesignPatterns.Creational.Factory;
 
 Console.WriteLine("..::FACTORY METHOD::..");
 
 var carFactory = new CarFactory();
 
 var couple = carFactory.Create(CarTypes.Couple);
-var sport = carFactory.Create(CarTypes.Sport);
+var sport = carFactory.Create(CarTypes.Sport);*/
+
+#endregion
+
+#region ABSTRACT FACTORY
+
+using DesignPatterns.Creational.AbstractFactory.Factories;
+
+Console.WriteLine("..::ABSTRACT FACTORY::..");
+
+var microsoftProductsFactory = new MicrosoftProductsFactory();
+var samsungProductsFactory = new SamsungProductsFactory();
+
+var microsoftShoppingProduct = new ShoppingProduct(microsoftProductsFactory);
+var samsungShoppingProduct = new ShoppingProduct(samsungProductsFactory);
+
+microsoftShoppingProduct.ShowLaptopInfos();
+microsoftShoppingProduct.ShowMouseInfos();
+
+Console.WriteLine();
+
+samsungShoppingProduct.ShowLaptopInfos();
+samsungShoppingProduct.ShowMouseInfos();
+
+Console.ReadKey();
 
 #endregion
 

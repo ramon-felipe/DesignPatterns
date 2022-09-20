@@ -7,17 +7,10 @@ using System.Threading.Tasks;
 
 namespace DesignPatterns.Creational.AbstractFactory
 {
-    /*public class MicrosoftMouse
+    public class MicrosoftMouse : Mouse
     {
-        public MicrosoftMouse() => Console.WriteLine("Microsoft mouse created!");        
-    }*/
-    public class MicrosoftMouse : IMouse
-    {
-        public int ButtonsQty {get;}
-        public MicrosoftMouse(int buttonsQty)
-        {
-            ButtonsQty = buttonsQty;
+        public MicrosoftMouse() 
+            : base(BrandEnum.Microsoft, 3) => 
             Console.WriteLine("Microsoft mouse created!");
-        }
     }
 }

@@ -9,11 +9,10 @@ namespace DesignPatterns.Creational.AbstractFactory.Factories
     public class MicrosoftProductsFactory : IProductsFactory
     {
         public ILaptop CreateLaptopProduct()
-            => new MicrosoftLaptop(10.5);
-        
+            => new MicrosoftLaptop();
 
         public IMouse CreateMouseProduct()
-            => new MicrosoftMouse(2);
+            => new MicrosoftMouse();
         
     }
 }

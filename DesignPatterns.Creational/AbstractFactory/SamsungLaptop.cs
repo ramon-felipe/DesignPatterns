@@ -7,19 +7,10 @@ using System.Threading.Tasks;
 
 namespace DesignPatterns.Creational.AbstractFactory
 {
-    /*public class SamsungLaptop : Laptop
+    public class SamsungLaptop : Laptop
     {
         public SamsungLaptop() : base(BrandEnum.Samsung, 11.4)
         {
-            Console.WriteLine("Samsung laptop created!");
-        }
-    }*/
-    public class SamsungLaptop : ILaptop
-    {
-        public double ScreenSize { get; }
-        public SamsungLaptop(double screenSize)
-        {
-            ScreenSize = screenSize;
             Console.WriteLine("Samsung laptop created!");
         }
     }

@@ -9,10 +9,9 @@ namespace DesignPatterns.Creational.AbstractFactory.Factories
     public class SamsungProductsFactory : IProductsFactory
     {
         public ILaptop CreateLaptopProduct()
-            => new SamsungLaptop(15.4);
-        
+            => new SamsungLaptop();
 
         public IMouse CreateMouseProduct()
-            => new SamsungMouse(3);        
+            => new SamsungMouse();        
     }
 }

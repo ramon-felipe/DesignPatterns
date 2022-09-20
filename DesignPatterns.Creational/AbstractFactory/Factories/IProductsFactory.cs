@@ -19,12 +19,12 @@ namespace DesignPatterns.Creational.AbstractFactory.Factories
 
     }
 
-    public interface ILaptop/* : IProduct*/
+    public interface ILaptop : IProduct
     {       
         double ScreenSize { get; }
     }
 
-    public interface IMouse/* : IProduct*/
+    public interface IMouse : IProduct
     {
         int ButtonsQty { get; }
     }
@@ -40,17 +40,11 @@ namespace DesignPatterns.Creational.AbstractFactory.Factories
             _mouse = productsFactory.CreateMouseProduct();
         }
         
-        public void ShowLaptopInfos()
-        {
-            Console.WriteLine("The laptop has a {0}\" screen size.", _laptop.ScreenSize);
-            // Console.WriteLine("The {0} laptop has the serial number: {1} and it has a {2}\" screen size.", _laptop.Brand, _laptop.SerialNumber, _laptop.ScreenSize);
-        }
+        public void ShowLaptopInfos() =>
+            Console.WriteLine("The {0} laptop has the serial number: {1} and it has a {2}\" screen size.", _laptop.Brand, _laptop.SerialNumber, _laptop.ScreenSize);
 
-        public void ShowMouseInfos()
-        {
-            Console.WriteLine("The mouse has {0} buttons.", _mouse.ButtonsQty);
-            // Console.WriteLine("The {0} mouse has the serial number: {1} and it has {2} buttons.", _mouse.Brand, _mouse.SerialNumber, _mouse.ButtonsQty);
-        }
+        public void ShowMouseInfos() =>
+            Console.WriteLine("The {0} mouse has the serial number: {1} and it has {2} buttons.", _mouse.Brand, _mouse.SerialNumber, _mouse.ButtonsQty);
     }
 
 }

@@ -10,7 +10,6 @@ namespace DesignPatterns.Creational.AbstractFactory.Factories
     {
         public ILaptop CreateLaptopProduct()
             => new MicrosoftLaptop();
-        
 
         public IMouse CreateMouseProduct()
             => new MicrosoftMouse();

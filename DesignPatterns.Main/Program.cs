@@ -30,7 +30,7 @@ var sport = carFactory.Create(CarTypes.Sport);*/
 
 #region ABSTRACT FACTORY
 
-using DesignPatterns.Creational.AbstractFactory.Factories;
+/*using DesignPatterns.Creational.AbstractFactory.Factories;
 
 Console.WriteLine("..::ABSTRACT FACTORY::..");
 
@@ -48,8 +48,24 @@ Console.WriteLine();
 samsungShoppingProduct.ShowLaptopInfos();
 samsungShoppingProduct.ShowMouseInfos();
 
-Console.ReadKey();
+Console.ReadKey();*/
 
 #endregion
 
+#region Builder
+using DesignPatterns.Creational.Builder;
+
+Console.WriteLine("..::BUILDER::..");
+
+var carBuilder = new CarBuilder();
+var carCreator = new CarCreator(carBuilder);
+
+var car1 = carCreator.Build("sport");
+var car2 = carCreator.Build("hatchback");
+
+Console.WriteLine(car1.ToString());
+Console.WriteLine(car2.ToString());
+
+Console.ReadKey();
+#endregion
 #endregion

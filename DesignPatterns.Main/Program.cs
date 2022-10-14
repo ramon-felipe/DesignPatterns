@@ -53,7 +53,7 @@ Console.ReadKey();*/
 #endregion
 
 #region Builder
-using DesignPatterns.Creational.Builder;
+/*using DesignPatterns.Creational.Builder;
 
 Console.WriteLine("..::BUILDER::..");
 
@@ -66,6 +66,40 @@ var car2 = carCreator.Build("hatchback");
 Console.WriteLine(car1.ToString());
 Console.WriteLine(car2.ToString());
 
-Console.ReadKey();
+Console.ReadKey();*/
 #endregion
+
+#region PROTOTYPE
+
+using DesignPatterns.Creational.Prototype;
+
+Console.WriteLine("..::PROTOTYPE::..");
+
+var manager = new Manager("John");
+var cloneManager = manager.Clone();
+
+var employee = new Employee("Joe", cloneManager);
+var cloneEmployee = employee.DeepClone();
+
+Console.WriteLine("Manager name: {0}", manager.Name);
+Console.WriteLine("Manager clone name: {0}\n", cloneManager.Name);
+
+Console.WriteLine("Employee: {0}, with manager {1}", employee.Name, employee.Manager.Name);
+Console.WriteLine("Employee clone: {0}, with manager {1}\n", cloneEmployee.Name, cloneEmployee.Manager.Name);
+
+cloneManager.Name = "Deborah";
+Console.WriteLine("Employee: {0}, with manager {1}", employee.Name, employee.Manager.Name);
+Console.WriteLine("Employee clone: {0}, with manager {1}\n", cloneEmployee.Name, cloneEmployee.Manager.Name);
+
+
+Console.WriteLine("Manager hashcode: {0}",manager.GetHashCode());
+Console.WriteLine("cloneManager hashcode: {0}", cloneManager.GetHashCode());
+Console.WriteLine("employee.Manager hashcode: {0}", employee.Manager.GetHashCode());
+Console.WriteLine("cloneEmployee.Manager hashcode: {0}", cloneEmployee.Manager.GetHashCode());
+
+Console.ReadKey();
+
+#endregion
+
+
 #endregion

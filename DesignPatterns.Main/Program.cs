@@ -52,7 +52,7 @@ Console.ReadKey();*/
 
 #endregion
 
-#region Builder
+#region BUILDER
 /*using DesignPatterns.Creational.Builder;
 
 Console.WriteLine("..::BUILDER::..");
@@ -71,7 +71,7 @@ Console.ReadKey();*/
 
 #region PROTOTYPE
 
-using DesignPatterns.Creational.Prototype;
+/*using DesignPatterns.Creational.Prototype;
 
 Console.WriteLine("..::PROTOTYPE::..");
 
@@ -97,9 +97,69 @@ Console.WriteLine("cloneManager hashcode: {0}", cloneManager.GetHashCode());
 Console.WriteLine("employee.Manager hashcode: {0}", employee.Manager.GetHashCode());
 Console.WriteLine("cloneEmployee.Manager hashcode: {0}", cloneEmployee.Manager.GetHashCode());
 
+Console.ReadKey();*/
+
+#endregion
+
+#endregion
+
+#region STRUCTURAL
+#region DECORATOR
+
+using DesignPatterns.Structural.Decorator;
+
+Console.WriteLine("..:: DECORATOR ::..");
+
+// instantiating our services
+var cloudMailService = new CloudMailService();
+var onPremiseMailService = new OnPremiseMailService();
+
+// using them
+cloudMailService.SendMail("Testing cloud mail service...");
+onPremiseMailService.SendMail("Testing onPremise mail service...");
+
+/*var cloudMailStatistcsDecorator = new MailStatisticsDecorator(cloudMailService);
+cloudMailStatistcsDecorator.SendMail("Testing Statistics Decorator for Cloud Mail service...");*/
+
+var onPremiseStatisticsDatabaseDecorator = new MessageDatabaseDecorator(new MailStatisticsDecorator(onPremiseMailService));
+
+onPremiseStatisticsDatabaseDecorator.SendMail("1) Testing DataBase Decorator for onPremise Mail service...");
+onPremiseStatisticsDatabaseDecorator.SendMail("2) Testing DataBase Decorator for onPremise Mail service...");
+var onPremiseMessages = onPremiseStatisticsDatabaseDecorator.SentMessages;
+
+foreach (var message in onPremiseMessages)
+{
+    Console.Write($"\t\nMessage sent: {message}");
+}
+
+
+/*var cloudMailDataBaseDecorator = new MessageDatabaseDecorator(cloudMailService);
+cloudMailDataBaseDecorator.SendMail("1) Testing DataBase Decorator for Cloud Mail service...");
+cloudMailDataBaseDecorator.SendMail("2) Testing DataBase Decorator for Cloud Mail service...");
+
+var cloudMailDataBaseMessages = cloudMailDataBaseDecorator.SentMessages;
+
+foreach (var message in cloudMailDataBaseMessages)
+{
+    Console.WriteLine($"\tMessage sent: {message}");
+}*/
+
 Console.ReadKey();
 
-#endregion
+/*var onPremiseStatisticsDatabaseDecorator = new MessageDatabaseDecorator(new MailStatisticsDecorator(onPremiseMailService));
+
+onPremiseStatisticsDatabaseDecorator.SendMail("1) Testing DataBase Decorator for onPremise Mail service...");
+onPremiseStatisticsDatabaseDecorator.SendMail("2) Testing DataBase Decorator for onPremise Mail service...");
+var onPremiseMessages = onPremiseStatisticsDatabaseDecorator.SentMessages;
+
+foreach (var message in onPremiseMessages)
+{
+    Console.WriteLine($"\tMessage sent: {message}");
+}
+*/
 
 
 #endregion
+#endregion
+
+

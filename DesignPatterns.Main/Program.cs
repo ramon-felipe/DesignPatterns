@@ -106,7 +106,7 @@ Console.ReadKey();*/
 #region STRUCTURAL
 #region DECORATOR
 
-using DesignPatterns.Structural.Decorator;
+/*using DesignPatterns.Structural.Decorator;
 
 Console.WriteLine("..:: DECORATOR ::..");
 
@@ -118,8 +118,8 @@ var onPremiseMailService = new OnPremiseMailService();
 cloudMailService.SendMail("Testing cloud mail service...");
 onPremiseMailService.SendMail("Testing onPremise mail service...");
 
-/*var cloudMailStatistcsDecorator = new MailStatisticsDecorator(cloudMailService);
-cloudMailStatistcsDecorator.SendMail("Testing Statistics Decorator for Cloud Mail service...");*/
+*//*var cloudMailStatistcsDecorator = new MailStatisticsDecorator(cloudMailService);
+cloudMailStatistcsDecorator.SendMail("Testing Statistics Decorator for Cloud Mail service...");*//*
 
 var onPremiseStatisticsDatabaseDecorator = new MessageDatabaseDecorator(new MailStatisticsDecorator(onPremiseMailService));
 
@@ -133,7 +133,7 @@ foreach (var message in onPremiseMessages)
 }
 
 
-/*var cloudMailDataBaseDecorator = new MessageDatabaseDecorator(cloudMailService);
+*//*var cloudMailDataBaseDecorator = new MessageDatabaseDecorator(cloudMailService);
 cloudMailDataBaseDecorator.SendMail("1) Testing DataBase Decorator for Cloud Mail service...");
 cloudMailDataBaseDecorator.SendMail("2) Testing DataBase Decorator for Cloud Mail service...");
 
@@ -142,9 +142,9 @@ var cloudMailDataBaseMessages = cloudMailDataBaseDecorator.SentMessages;
 foreach (var message in cloudMailDataBaseMessages)
 {
     Console.WriteLine($"\tMessage sent: {message}");
-}*/
+}*//*
 
-Console.ReadKey();
+Console.ReadKey();*/
 
 /*var onPremiseStatisticsDatabaseDecorator = new MessageDatabaseDecorator(new MailStatisticsDecorator(onPremiseMailService));
 
@@ -160,6 +160,35 @@ foreach (var message in onPremiseMessages)
 
 
 #endregion
+
+#region ADAPTER
+using DesignPatterns.Structural.Adapter;
+
+Console.WriteLine("..:: ADAPTER ::..");
+/*
+ITarget adapter = new EmployeeAdapter();
+var employees = adapter.GetEmployess();
+
+foreach (var employee in employees)
+{
+    Console.WriteLine($"Employee: {employee}");
+}*/
+
+var externalSystem = new ExternalSystem();
+ICityAdapter cityAdapter = new CityAdapter(externalSystem);
+var adaptedCity = cityAdapter.GetNewCity();
+
+Console.WriteLine($"City: {adaptedCity}");
+
+/*
+ICityAdapter cityAdapterClass = new CityAdapterClass();
+var adaptedCityClass = cityAdapterClass.GetNewCity();
+
+Console.WriteLine($"City: {adaptedCityClass}");*/
+
+Console.ReadKey();
+#endregion
+
 #endregion
 
 

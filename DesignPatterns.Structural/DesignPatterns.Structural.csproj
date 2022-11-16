@@ -12,7 +12,6 @@
     <Folder Include="Facade\" />
     <Folder Include="Flyweight\" />
     <Folder Include="Composite\" />
-    <Folder Include="Adapter\" />
     <Folder Include="Proxy\" />
   </ItemGroup>
 

@@ -162,9 +162,9 @@ foreach (var message in onPremiseMessages)
 #endregion
 
 #region ADAPTER
-using DesignPatterns.Structural.Adapter;
+// using DesignPatterns.Structural.Adapter;
 
-Console.WriteLine("..:: ADAPTER ::..");
+// Console.WriteLine("..:: ADAPTER ::..");
 /*
 ITarget adapter = new EmployeeAdapter();
 var employees = adapter.GetEmployess();
@@ -174,11 +174,11 @@ foreach (var employee in employees)
     Console.WriteLine($"Employee: {employee}");
 }*/
 
-var externalSystem = new ExternalSystem();
+/*var externalSystem = new ExternalSystem();
 ICityAdapter cityAdapter = new CityAdapter(externalSystem);
 var adaptedCity = cityAdapter.GetNewCity();
 
-Console.WriteLine($"City: {adaptedCity}");
+Console.WriteLine($"City: {adaptedCity}");*/
 
 /*
 ICityAdapter cityAdapterClass = new CityAdapterClass();
@@ -186,7 +186,41 @@ var adaptedCityClass = cityAdapterClass.GetNewCity();
 
 Console.WriteLine($"City: {adaptedCityClass}");*/
 
+//Console.ReadKey();
+#endregion
+
+#region BRIDGE
+
+using DesignPatterns.Structural.Bridge;
+
+Console.WriteLine("..:: BRIDGE ::..");
+
+var noDiscount = new NoDiscount();
+var studentDiscount = new StudentDiscount();
+var seniorDiscount = new SeniorDiscount();
+
+var oneWeekNoDiscountLicense = new NewOneWeekLicense("basic license no discount", noDiscount);
+var seniorOneWeekLicense = new NewOneWeekLicense("senior license", seniorDiscount);
+var studentOneWeekLicense = new NewOneWeekLicense("student license", studentDiscount);
+
+Console.WriteLine($"App: {oneWeekNoDiscountLicense.AppName}. " +
+                  $"Bought on: {oneWeekNoDiscountLicense.PurchaseDate}. " +
+                  $"Price: ${oneWeekNoDiscountLicense.GetPrice()} " +
+                  $"App expiration: {oneWeekNoDiscountLicense.GetExpirationDate()}");
+
+Console.WriteLine($"App: {seniorOneWeekLicense.AppName}. " +
+                  $"Bought on: {seniorOneWeekLicense.PurchaseDate}. " +
+                  $"Price: ${seniorOneWeekLicense.GetPrice()} " +
+                  $"App expiration: {seniorOneWeekLicense.GetExpirationDate()}");
+
+Console.WriteLine($"App: {studentOneWeekLicense.AppName}. " +
+                  $"Bought on: {studentOneWeekLicense.PurchaseDate}. " +
+                  $"Price: ${studentOneWeekLicense.GetPrice()} " +
+                  $"App expiration: {studentOneWeekLicense.GetExpirationDate()}");
+
 Console.ReadKey();
+
+
 #endregion
 
 #endregion

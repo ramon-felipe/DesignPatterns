@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Iterator\" />
     <Folder Include="Interpreter\" />
     <Folder Include="Command\" />
     <Folder Include="ChainOfResponsibility\" />

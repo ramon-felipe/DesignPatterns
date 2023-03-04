@@ -191,7 +191,7 @@ Console.WriteLine($"City: {adaptedCityClass}");*/
 
 #region BRIDGE
 
-using DesignPatterns.Structural.Bridge;
+/*using DesignPatterns.Structural.Bridge;
 
 Console.WriteLine("..:: BRIDGE ::..");
 
@@ -218,11 +218,50 @@ Console.WriteLine($"App: {studentOneWeekLicense.AppName}. " +
                   $"Price: ${studentOneWeekLicense.GetPrice()} " +
                   $"App expiration: {studentOneWeekLicense.GetExpirationDate()}");
 
+Console.ReadKey();*/
+
+
+#endregion
+
+#endregion
+
+#region BEHAVIORAL
+
+#region ITERATOR
+
+using DesignPatterns.Behavioral.GenericIterator;
+using DesignPatterns.Behavioral.Iterator;
+
+Console.WriteLine("..:: ITERATOR ::..");
+
+var car = new Car { Name = "Beetle" };
+var car2 = new Car { Name = "BMW" };
+
+var p1 = new Person { Name = "P1", Age = 31 };
+var p2 = new Person { Name = "P2", Age = 32 };
+
+var people = new Person[] { p1, p2 };
+var newPeopleIterator = people.AsIterator();
+
+while (!newPeopleIterator.IsDone)
+{
+    Console.WriteLine(newPeopleIterator.CurrentItem);
+    newPeopleIterator.Next();
+}
+
+var genericCarCollection = new GenericCollection<Car> { car, car2 };
+var carIterator = genericCarCollection.CreateIterator();
+
+while (!carIterator.IsDone)
+{
+    Console.WriteLine(carIterator.CurrentItem);
+    carIterator.Next();
+}
+
+
 Console.ReadKey();
 
-
 #endregion
 
 #endregion
-
 

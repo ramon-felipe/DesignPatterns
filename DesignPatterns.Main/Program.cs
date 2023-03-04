@@ -234,70 +234,29 @@ using DesignPatterns.Behavioral.Iterator;
 
 Console.WriteLine("..:: ITERATOR ::..");
 
-var p1 = new Person { Name = "P1", Age = 31 };
-var p2 = new Person { Name = "P2", Age = 32 };
-var p3 = new Person { Name = "P3", Age = 33 };
-var p4 = new Person { Name = "P4", Age = 34 };
-var p5 = new Person { Name = "P5", Age = 35 };
-var p6 = new Person { Name = "P6", Age = 36 };
-var p7 = new Person { Name = "P7", Age = 37 };
-
-var people = new PeopleCollection { p1, p2, p3 };
-var people2 = new List<Person> { p4, p5 };
-var people3 = new HashSet<Person> { p6, p7 };
-
-
-var peopleIterator = people.CreateIterator();
-var peopleIterator2 = people2.AsIterator();
-var peopleIterator3 = people3.AsIterator();
-
 var car = new Car { Name = "Beetle" };
 var car2 = new Car { Name = "BMW" };
-var car3 = new Car { Name = "Audi" };
-var cars = new List<Car> { car, car2 };
-var cars2 = new List<Car> { car, car2, car3 };
 
-var genericCollection = new GenericCollection<Car> { car };
-var genericIteratior = genericCollection.CreateIterator();
-var genericIteratior2 = cars2.AsIterator();
-var genericIteratior3 = cars.AsIterator();
+var p1 = new Person { Name = "P1", Age = 31 };
+var p2 = new Person { Name = "P2", Age = 32 };
 
-while (!genericIteratior2.IsDone)
+var people = new Person[] { p1, p2 };
+var newPeopleIterator = people.AsIterator();
+
+while (!newPeopleIterator.IsDone)
 {
-    Console.WriteLine(genericIteratior2.CurrentItem);
-    genericIteratior2.Next();
+    Console.WriteLine(newPeopleIterator.CurrentItem);
+    newPeopleIterator.Next();
 }
 
-while (!genericIteratior3.IsDone)
-{
-    Console.WriteLine(genericIteratior3.CurrentItem);
-    genericIteratior3.Next();
-}
+var genericCarCollection = new GenericCollection<Car> { car, car2 };
+var carIterator = genericCarCollection.CreateIterator();
 
-while (!genericIteratior.IsDone)
+while (!carIterator.IsDone)
 {
-    Console.WriteLine(genericIteratior.CurrentItem);
-    genericIteratior.Next();
+    Console.WriteLine(carIterator.CurrentItem);
+    carIterator.Next();
 }
-
-while (!peopleIterator.IsDone)
-{
-    Console.WriteLine(peopleIterator.CurrentItem);
-    peopleIterator.Next();
-}
-
-while (!peopleIterator2.IsDone)
-{
-    Console.WriteLine(peopleIterator2.CurrentItem);
-    peopleIterator2.Next();
-}
-
-while (!peopleIterator3.IsDone)
-{
-    Console.WriteLine(peopleIterator3.CurrentItem);
-    peopleIterator3.Next();
-}
-
 
 
 Console.ReadKey();

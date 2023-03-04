@@ -14,7 +14,6 @@ namespace DesignPatterns.Behavioral.Iterator
         Person Next();
         bool IsDone { get; }
         Person CurrentItem { get; }
-
     }
 
     public class PeopleIterator : IPeopleIterator
@@ -38,10 +37,7 @@ namespace DesignPatterns.Behavioral.Iterator
             return _peopleCollection.ElementAt(_index);
         }
 
-        public Person Next()
-        {
-            return _peopleCollection.ElementAt(_index++);
-        }
+        public Person Next() => _peopleCollection.ElementAt(_index++);        
     }
 
     public interface IPeopleCollection

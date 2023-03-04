@@ -13,7 +13,6 @@ namespace DesignPatterns.Behavioral.GenericIterator
         T Next();
         bool IsDone { get; }
         T CurrentItem { get; }
-
     }
 
     public class CollectionIterator<T> : IIterator<T>

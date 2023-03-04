@@ -10,18 +10,6 @@ namespace DesignPatterns.Behavioral.Iterator
 {
     public static class ListExtensions
     {
-        public static IPeopleIterator AsIterator(this IEnumerable<Person> people)
-        {
-            if (people == null || !people.Any())
-                return new PeopleCollection().CreateIterator();
-
-            var collection = new PeopleCollection();
-            collection.AddRange(people);
-            var iterator = collection.CreateIterator();
-
-            return iterator;
-        }
-
         public static IIterator<T> AsIterator<T>(this IEnumerable<T> collection)
         {
             if (collection == null || !collection.Any())

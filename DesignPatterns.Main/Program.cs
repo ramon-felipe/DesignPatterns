@@ -229,39 +229,58 @@ Console.ReadKey();*/
 
 #region ITERATOR
 
-using DesignPatterns.Behavioral.GenericIterator;
-using DesignPatterns.Behavioral.Iterator;
+//using DesignPatterns.Behavioral.GenericIterator;
+//using DesignPatterns.Behavioral.Iterator;
 
-Console.WriteLine("..:: ITERATOR ::..");
+//Console.WriteLine("..:: ITERATOR ::..");
 
-var car = new Car { Name = "Beetle" };
-var car2 = new Car { Name = "BMW" };
+//var car = new Car { Name = "Beetle" };
+//var car2 = new Car { Name = "BMW" };
 
-var p1 = new Person { Name = "P1", Age = 31 };
-var p2 = new Person { Name = "P2", Age = 32 };
+//var p1 = new Person { Name = "P1", Age = 31 };
+//var p2 = new Person { Name = "P2", Age = 32 };
 
-var people = new Person[] { p1, p2 };
-var newPeopleIterator = people.AsIterator();
+//var people = new Person[] { p1, p2 };
+//var newPeopleIterator = people.AsIterator();
 
-while (!newPeopleIterator.IsDone)
+//while (!newPeopleIterator.IsDone)
+//{
+//    Console.WriteLine(newPeopleIterator.CurrentItem);
+//    newPeopleIterator.Next();
+//}
+
+//var genericCarCollection = new GenericCollection<Car> { car, car2 };
+//var carIterator = genericCarCollection.CreateIterator();
+
+//while (!carIterator.IsDone)
+//{
+//    Console.WriteLine(carIterator.CurrentItem);
+//    carIterator.Next();
+//}
+
+
+//Console.ReadKey();
+
+#endregion
+
+#endregion
+using DesignPatterns.Behavioral.Specification;
+
+
+using var db = new AppDbContext();
+var initializer = new DbInitialiser(db);
+initializer.Run();
+var movieRepo = new MovieRepository(db);
+var repo = new GenericRepository<Movie>(db);
+
+var moviesWithoutDirectors = movieRepo.GetMovies();
+var moviesWithDirectors = movieRepo.GetMovieWithDirectors();
+
+var movies = repo.GetAll();
+
+foreach (var movie in movies)
 {
-    Console.WriteLine(newPeopleIterator.CurrentItem);
-    newPeopleIterator.Next();
+    Console.WriteLine(movie);
 }
-
-var genericCarCollection = new GenericCollection<Car> { car, car2 };
-var carIterator = genericCarCollection.CreateIterator();
-
-while (!carIterator.IsDone)
-{
-    Console.WriteLine(carIterator.CurrentItem);
-    carIterator.Next();
-}
-
 
 Console.ReadKey();
-
-#endregion
-
-#endregion
-

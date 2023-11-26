@@ -18,4 +18,8 @@
     <Folder Include="Visitor\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DesignPatterns.Domain\DesignPatterns.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

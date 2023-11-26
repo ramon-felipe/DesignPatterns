@@ -4,6 +4,8 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using DesignPatterns.Domain;
 
 namespace DesignPatterns.Behavioral.Specification;
 
@@ -31,10 +33,33 @@ namespace DesignPatterns.Behavioral.Specification;
 /// </item>
 /// </list>
 /// </summary>
-public class SpecficationPattern
+public abstract class Specification<T>
+    where T : class
 {
-    public SpecficationPattern()
+    public bool IsSatisfiedBy(T entity)
     {
-        
+        Func<T, bool> predicate = this.ToExpression().Compile();
+        return predicate(entity);
+    }
+
+    public abstract Expression<Func<T, bool>> ToExpression();
+}
+
+public sealed class MoviesLongerThan120Specification : Specification<Movie>
+{
+    public override Expression<Func<Movie, bool>> ToExpression()
+    {
+        var duration = 120;
+        return _ => _.Duration > duration;
+    }
+}
+
+public sealed class DirectorsOlderThan30Specification : Specification<Director>
+{
+    public override Expression<Func<Director, bool>> ToExpression()
+    {
+        var age = 30;
+        Expression<Func<Director, bool>> ex = _ => _.Age > age;
+        return ex;
     }
 }

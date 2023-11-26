@@ -264,6 +264,7 @@ Console.ReadKey();*/
 #endregion
 
 #endregion
+using DesignPatterns.Behavioral.Specification;
 using DesignPatterns.Domain;
 using DesignPatterns.Infrastructure;
 
@@ -272,13 +273,23 @@ using var db = new AppDbContext();
 var initializer = new DbInitializer(db);
 initializer.Run();
 
+var directorOlderThan30Spec = new DirectorsOlderThan30Specification();
+
 var repo = new GenericRepository<Director>(db);
 
 var entities = repo.GetAll();
+var directorsOver30 = repo.GetAll(directorOlderThan30Spec.ToExpression());
 
-foreach (var movie in entities)
+foreach (var director in entities)
 {
-    Console.WriteLine(movie);
+    if (!directorOlderThan30Spec.IsSatisfiedBy(director))
+        Console.WriteLine($"The director [{director.Name}] is not older than 30y. He has {director.Age}yo.");
+}
+
+Console.WriteLine("List of directors older than 30yo.");
+foreach (var director in directorsOver30)
+{
+    Console.WriteLine(director);
 }
 
 Console.ReadKey();

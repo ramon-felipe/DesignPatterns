@@ -275,16 +275,19 @@ initializer.Run();
 
 var directorOlderThan30Spec = new DirectorsOlderThanSpecification(30);
 var dirWithAtLeastOneMovieSpec = new DirectorsWithAtLeastMovieQtySpecification(1);
-var dirOver30WithAtLeastOneMovieSpec = directorOlderThan30Spec.And(dirWithAtLeastOneMovieSpec);
+var dirOver30WithAtLeastOneMovieSpec = directorOlderThan30Spec & dirWithAtLeastOneMovieSpec;
 var dirLessThan30WithMovieSpec = dirWithAtLeastOneMovieSpec & !directorOlderThan30Spec;
+var genSpec = new GenericSpecification<Movie>(_ => _.Id > 1);
 
-var repo = new GenericRepository<Director>(db);
+var directorsRepo = new GenericRepository<Director>(db);
+var moviesRepo = new GenericRepository<Movie>(db);
 
-var entities = repo.GetAll();
-var directorsOver30 = repo.GetAll(directorOlderThan30Spec.ToExpression());
-var dirWithAtLeastOneMovie = repo.GetAll(dirWithAtLeastOneMovieSpec.ToExpression());
-var dirOver30WithAtLeastOneMovie = repo.GetAll(dirOver30WithAtLeastOneMovieSpec.ToExpression());
-var dirLessThan30WithMovie = repo.GetAll(dirLessThan30WithMovieSpec.ToExpression());
+var entities = directorsRepo.GetAll();
+var directorsOver30 = directorsRepo.GetAll(directorOlderThan30Spec.ToExpression());
+var dirWithAtLeastOneMovie = directorsRepo.GetAll(dirWithAtLeastOneMovieSpec.ToExpression());
+var dirOver30WithAtLeastOneMovie = directorsRepo.GetAll(dirOver30WithAtLeastOneMovieSpec.ToExpression());
+var dirLessThan30WithMovie = directorsRepo.GetAll(dirLessThan30WithMovieSpec.ToExpression());
+var movies = moviesRepo.GetAll(genSpec.Expression);
 
 foreach (var director in entities)
 {
@@ -314,6 +317,12 @@ Console.WriteLine("\n*List of directors with 30yo or less with at least one movi
 foreach (var director in dirLessThan30WithMovie)
 {
     Console.WriteLine(director);
+}
+
+Console.WriteLine("\n*Movies Test*");
+foreach (var movie in movies)
+{
+    Console.WriteLine(movie);
 }
 
 Console.ReadKey();

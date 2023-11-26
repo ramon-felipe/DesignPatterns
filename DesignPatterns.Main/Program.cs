@@ -229,39 +229,91 @@ Console.ReadKey();*/
 
 #region ITERATOR
 
-using DesignPatterns.Behavioral.GenericIterator;
-using DesignPatterns.Behavioral.Iterator;
+//using DesignPatterns.Behavioral.GenericIterator;
+//using DesignPatterns.Behavioral.Iterator;
 
-Console.WriteLine("..:: ITERATOR ::..");
+//Console.WriteLine("..:: ITERATOR ::..");
 
-var car = new Car { Name = "Beetle" };
-var car2 = new Car { Name = "BMW" };
+//var car = new Car { Name = "Beetle" };
+//var car2 = new Car { Name = "BMW" };
 
-var p1 = new Person { Name = "P1", Age = 31 };
-var p2 = new Person { Name = "P2", Age = 32 };
+//var p1 = new Person { Name = "P1", Age = 31 };
+//var p2 = new Person { Name = "P2", Age = 32 };
 
-var people = new Person[] { p1, p2 };
-var newPeopleIterator = people.AsIterator();
+//var people = new Person[] { p1, p2 };
+//var newPeopleIterator = people.AsIterator();
 
-while (!newPeopleIterator.IsDone)
+//while (!newPeopleIterator.IsDone)
+//{
+//    Console.WriteLine(newPeopleIterator.CurrentItem);
+//    newPeopleIterator.Next();
+//}
+
+//var genericCarCollection = new GenericCollection<Car> { car, car2 };
+//var carIterator = genericCarCollection.CreateIterator();
+
+//while (!carIterator.IsDone)
+//{
+//    Console.WriteLine(carIterator.CurrentItem);
+//    carIterator.Next();
+//}
+
+
+//Console.ReadKey();
+
+#endregion
+
+#endregion
+using DesignPatterns.Behavioral.Specification;
+using DesignPatterns.Domain;
+using DesignPatterns.Infrastructure;
+
+
+using var db = new AppDbContext();
+var initializer = new DbInitializer(db);
+initializer.Run();
+
+var directorOlderThan30Spec = new DirectorsOlderThanSpecification(30);
+var dirWithAtLeastOneMovieSpec = new DirectorsWithAtLeastMovieQtySpecification(1);
+var dirOver30WithAtLeastOneMovieSpec = directorOlderThan30Spec.And(dirWithAtLeastOneMovieSpec);
+var dirLessThan30WithMovieSpec = dirWithAtLeastOneMovieSpec & !directorOlderThan30Spec;
+
+var repo = new GenericRepository<Director>(db);
+
+var entities = repo.GetAll();
+var directorsOver30 = repo.GetAll(directorOlderThan30Spec.ToExpression());
+var dirWithAtLeastOneMovie = repo.GetAll(dirWithAtLeastOneMovieSpec.ToExpression());
+var dirOver30WithAtLeastOneMovie = repo.GetAll(dirOver30WithAtLeastOneMovieSpec.ToExpression());
+var dirLessThan30WithMovie = repo.GetAll(dirLessThan30WithMovieSpec.ToExpression());
+
+foreach (var director in entities)
 {
-    Console.WriteLine(newPeopleIterator.CurrentItem);
-    newPeopleIterator.Next();
+    if (!directorOlderThan30Spec.IsSatisfiedBy(director))
+        Console.WriteLine($"The director [{director.Name}] is not older than 30y. He has {director.Age}yo.");
 }
 
-var genericCarCollection = new GenericCollection<Car> { car, car2 };
-var carIterator = genericCarCollection.CreateIterator();
-
-while (!carIterator.IsDone)
+Console.WriteLine("\n*List of directors older than 30yo.*");
+foreach (var director in directorsOver30)
 {
-    Console.WriteLine(carIterator.CurrentItem);
-    carIterator.Next();
+    Console.WriteLine(director);
 }
 
+Console.WriteLine("\n*List of directors with at least one movie.*");
+foreach (var director in dirWithAtLeastOneMovie)
+{
+    Console.WriteLine(director);
+}
+
+Console.WriteLine("\n*List of directors older than 30yo with at least one movie.*");
+foreach (var director in dirOver30WithAtLeastOneMovie)
+{
+    Console.WriteLine(director);
+}
+
+Console.WriteLine("\n*List of directors with 30yo or less with at least one movie.*");
+foreach (var director in dirLessThan30WithMovie)
+{
+    Console.WriteLine(director);
+}
 
 Console.ReadKey();
-
-#endregion
-
-#endregion
-

@@ -273,12 +273,18 @@ using var db = new AppDbContext();
 var initializer = new DbInitializer(db);
 initializer.Run();
 
-var directorOlderThan30Spec = new DirectorsOlderThan30Specification();
+var directorOlderThan30Spec = new DirectorsOlderThanSpecification(30);
+var dirWithAtLeastOneMovieSpec = new DirectorsWithAtLeastMovieQtySpecification(1);
+var dirOver30WithAtLeastOneMovieSpec = directorOlderThan30Spec.And(dirWithAtLeastOneMovieSpec);
+var dirLessThan30WithMovieSpec = dirWithAtLeastOneMovieSpec & !directorOlderThan30Spec;
 
 var repo = new GenericRepository<Director>(db);
 
 var entities = repo.GetAll();
 var directorsOver30 = repo.GetAll(directorOlderThan30Spec.ToExpression());
+var dirWithAtLeastOneMovie = repo.GetAll(dirWithAtLeastOneMovieSpec.ToExpression());
+var dirOver30WithAtLeastOneMovie = repo.GetAll(dirOver30WithAtLeastOneMovieSpec.ToExpression());
+var dirLessThan30WithMovie = repo.GetAll(dirLessThan30WithMovieSpec.ToExpression());
 
 foreach (var director in entities)
 {
@@ -286,8 +292,26 @@ foreach (var director in entities)
         Console.WriteLine($"The director [{director.Name}] is not older than 30y. He has {director.Age}yo.");
 }
 
-Console.WriteLine("List of directors older than 30yo.");
+Console.WriteLine("\n*List of directors older than 30yo.*");
 foreach (var director in directorsOver30)
+{
+    Console.WriteLine(director);
+}
+
+Console.WriteLine("\n*List of directors with at least one movie.*");
+foreach (var director in dirWithAtLeastOneMovie)
+{
+    Console.WriteLine(director);
+}
+
+Console.WriteLine("\n*List of directors older than 30yo with at least one movie.*");
+foreach (var director in dirOver30WithAtLeastOneMovie)
+{
+    Console.WriteLine(director);
+}
+
+Console.WriteLine("\n*List of directors with 30yo or less with at least one movie.*");
+foreach (var director in dirLessThan30WithMovie)
 {
     Console.WriteLine(director);
 }

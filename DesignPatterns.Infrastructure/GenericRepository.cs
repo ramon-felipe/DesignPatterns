@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace DesignPatterns.Infrastructure;
 
-public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : Domain.Entity
 {
     protected readonly AppDbContext dbContext;
     protected readonly DbSet<TEntity> dbSet;
@@ -22,12 +22,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return entity == null ? Maybe<TEntity>.None : Maybe<TEntity>.From(entity);
     }   
 
-    public IEnumerable<TEntity> GetAll()
+    public IReadOnlyList<TEntity> GetAll()
     {
         return this.dbSet.AsNoTracking().ToList();
     }
 
-    public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> expression)
+    public IReadOnlyList<TEntity> GetAll(Expression<Func<TEntity, bool>> expression)
     {
         return this.dbSet
             .AsNoTracking()

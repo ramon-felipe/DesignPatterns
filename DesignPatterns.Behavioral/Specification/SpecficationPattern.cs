@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DesignPatterns.Domain;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
-using DesignPatterns.Domain;
 
 namespace DesignPatterns.Behavioral.Specification;
 
@@ -34,7 +29,7 @@ namespace DesignPatterns.Behavioral.Specification;
 /// </list>
 /// </summary>
 public abstract class Specification<T>
-    where T : class
+    where T : Entity
 {
     public bool IsSatisfiedBy(T entity)
     {
@@ -43,23 +38,18 @@ public abstract class Specification<T>
     }
 
     public abstract Expression<Func<T, bool>> ToExpression();
-}
 
-public sealed class MoviesLongerThan120Specification : Specification<Movie>
-{
-    public override Expression<Func<Movie, bool>> ToExpression()
-    {
-        var duration = 120;
-        return _ => _.Duration > duration;
+    public Specification<T> And(Specification<T> specification)
+    {       
+        return new AndSpecification<T>(this, specification);
     }
-}
+    public Specification<T> Or(Specification<T> specification)
+    {
+        return new OrSpecification<T>(this, specification);
+    }
+    public Specification<T> Not() => new NotSpecification<T>(this);
 
-public sealed class DirectorsOlderThan30Specification : Specification<Director>
-{
-    public override Expression<Func<Director, bool>> ToExpression()
-    {
-        var age = 30;
-        Expression<Func<Director, bool>> ex = _ => _.Age > age;
-        return ex;
-    }
+    public static Specification<T> operator &(Specification<T> ls, Specification<T> rs) => ls.And(rs);
+    public static Specification<T> operator |(Specification<T> ls, Specification<T> rs) => ls.Or(rs);
+    public static Specification<T> operator !(Specification<T> spec) => spec.Not();
 }

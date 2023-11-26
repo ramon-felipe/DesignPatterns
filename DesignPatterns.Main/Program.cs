@@ -264,21 +264,19 @@ Console.ReadKey();*/
 #endregion
 
 #endregion
-using DesignPatterns.Behavioral.Specification;
+using DesignPatterns.Domain;
+using DesignPatterns.Infrastructure;
 
 
 using var db = new AppDbContext();
-var initializer = new DbInitialiser(db);
+var initializer = new DbInitializer(db);
 initializer.Run();
-var movieRepo = new MovieRepository(db);
-var repo = new GenericRepository<Movie>(db);
 
-var moviesWithoutDirectors = movieRepo.GetMovies();
-var moviesWithDirectors = movieRepo.GetMovieWithDirectors();
+var repo = new GenericRepository<Director>(db);
 
-var movies = repo.GetAll();
+var entities = repo.GetAll();
 
-foreach (var movie in movies)
+foreach (var movie in entities)
 {
     Console.WriteLine(movie);
 }

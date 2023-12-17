@@ -263,97 +263,138 @@ Console.ReadKey();*/
 
 #endregion
 
+#region SPECIFICATION
+
+//using DesignPatterns.Behavioral.Specification;
+//using DesignPatterns.Domain;
+//using DesignPatterns.Infrastructure;
+//using NSpecifications;
+//using System.Linq.Expressions;
+
+
+//using var db = new AppDbContext();
+//var initializer = new DbInitializer(db);
+//initializer.Run();
+
+//var directorOlderThan30Spec = new DirectorsOlderThanSpecification(30);
+//var dirWithAtLeastOneMovieSpec = new DirectorsWithAtLeastMovieQtySpecification(1);
+//var dirOver30WithAtLeastOneMovieSpec = directorOlderThan30Spec & dirWithAtLeastOneMovieSpec;
+//var dirLessThan30WithMovieSpec = dirWithAtLeastOneMovieSpec & !directorOlderThan30Spec;
+//var genSpec = new GenericSpecification<Movie>(_ => _.Id > 1);
+
+//var directorsRepo = new GenericRepository<Director>(db);
+//var moviesRepo = new GenericRepository<Movie>(db);
+
+//var entities = directorsRepo.GetAll();
+//var directorsOver30 = directorsRepo.GetAll(directorOlderThan30Spec.ToExpression());
+//var dirWithAtLeastOneMovie = directorsRepo.GetAll(dirWithAtLeastOneMovieSpec.ToExpression());
+//var dirOver30WithAtLeastOneMovie = directorsRepo.GetAll(dirOver30WithAtLeastOneMovieSpec.ToExpression());
+//var dirLessThan30WithMovie = directorsRepo.GetAll(dirLessThan30WithMovieSpec.ToExpression());
+//var movies = moviesRepo.GetAll(genSpec.Expression);
+
+//Console.WriteLine("All directors");
+//foreach (var director in entities) Console.WriteLine(director);
+
+//Console.WriteLine();
+//foreach (var director in entities)
+//{
+//    if (!directorOlderThan30Spec.IsSatisfiedBy(director))
+//        Console.WriteLine($"The director [{director.Name}] is not older than 30y. He has {director.Age}yo.");
+//}
+
+//Console.WriteLine("\n*List of directors older than 30yo.*");
+//foreach (var director in directorsOver30)
+//{
+//    Console.WriteLine(director);
+//}
+
+//Console.WriteLine("\n*List of directors with at least one movie.*");
+//foreach (var director in dirWithAtLeastOneMovie)
+//{
+//    Console.WriteLine(director);
+//}
+
+//Console.WriteLine("\n*List of directors older than 30yo with at least one movie.*");
+//foreach (var director in dirOver30WithAtLeastOneMovie)
+//{
+//    Console.WriteLine(director);
+//}
+
+//Console.WriteLine("\n*List of directors with 30yo or less with at least one movie.*");
+//foreach (var director in dirLessThan30WithMovie)
+//{
+//    Console.WriteLine(director);
+//}
+
+//Console.WriteLine("\n*Movies Test*");
+//foreach (var movie in movies)
+//{
+//    Console.WriteLine(movie);
+//}
+
+//// using NSpecification
+//var directorsWithAtLeastOneMovie = new Spec<Director>(_ => _.Movies.Count >= 1);
+//var directorsOver30Spec = new Spec<Director>(_ => _.Age > 30);
+
+//var directorsOver30WithAtLeastOneMovieSpec = directorsWithAtLeastOneMovie & directorsOver30Spec;
+//var directorsOver30WithOneMovie = directorsRepo.GetAll(directorsOver30WithAtLeastOneMovieSpec);
+
+//Console.WriteLine("\n*NSPEC2: List of directors older than 30yo with at least one movie.*");
+//foreach (var director in directorsOver30WithOneMovie)
+//{
+//    Console.WriteLine(director);
+//}
+
+//Console.WriteLine("\n*NSPEC2: List of directors older than 30yo with at least one movie.*");
+//foreach (var director in entities.Where(Director.OverAgeWithAtLeastMoviesQty(30, 1)))
+//{
+//    Console.WriteLine(director);
+//}
+
+//Console.WriteLine("\n*NSPEC2: List of directors older than 30yo with at least one movie.*");
+//foreach (var director in entities.Where(DirectorSpecs.OverAgeWithAtLeastMoviesQty(30, 1)))
+//{
+//    Console.WriteLine(director);
+//}
+
+//Console.ReadKey();
+
 #endregion
-using DesignPatterns.Behavioral.Specification;
-using DesignPatterns.Domain;
-using DesignPatterns.Infrastructure;
-using NSpecifications;
-using System.Linq.Expressions;
 
+#region VISITOR
 
-using var db = new AppDbContext();
-var initializer = new DbInitializer(db);
-initializer.Run();
+using DesignPatterns.Behavioral.Visitor;
 
-var directorOlderThan30Spec = new DirectorsOlderThanSpecification(30);
-var dirWithAtLeastOneMovieSpec = new DirectorsWithAtLeastMovieQtySpecification(1);
-var dirOver30WithAtLeastOneMovieSpec = directorOlderThan30Spec & dirWithAtLeastOneMovieSpec;
-var dirLessThan30WithMovieSpec = dirWithAtLeastOneMovieSpec & !directorOlderThan30Spec;
-var genSpec = new GenericSpecification<Movie>(_ => _.Id > 1);
+var items = new List<IVisitableElement>
+{
+    new Book(1, 11.99),
+    new Book(2, 22.79),
+    new Vinyl(3, 17.99),
+    new Book(4, 9.79),
+};
 
-var directorsRepo = new GenericRepository<Director>(db);
-var moviesRepo = new GenericRepository<Movie>(db);
+var discountVisitor = new DiscountVisitor();
+var salesVisitor = new SalesVisitor();
 
-var entities = directorsRepo.GetAll();
-var directorsOver30 = directorsRepo.GetAll(directorOlderThan30Spec.ToExpression());
-var dirWithAtLeastOneMovie = directorsRepo.GetAll(dirWithAtLeastOneMovieSpec.ToExpression());
-var dirOver30WithAtLeastOneMovie = directorsRepo.GetAll(dirOver30WithAtLeastOneMovieSpec.ToExpression());
-var dirLessThan30WithMovie = directorsRepo.GetAll(dirLessThan30WithMovieSpec.ToExpression());
-var movies = moviesRepo.GetAll(genSpec.Expression);
+foreach (var item in items)
+{
+    item.Accept(discountVisitor);
+    item.Accept(salesVisitor);
+}
 
-Console.WriteLine("All directors");
-foreach (var director in entities) Console.WriteLine(director);
+discountVisitor.Print();
+salesVisitor.Print();
 
 Console.WriteLine();
-foreach (var director in entities)
-{
-    if (!directorOlderThan30Spec.IsSatisfiedBy(director))
-        Console.WriteLine($"The director [{director.Name}] is not older than 30y. He has {director.Age}yo.");
-}
 
-Console.WriteLine("\n*List of directors older than 30yo.*");
-foreach (var director in directorsOver30)
-{
-    Console.WriteLine(director);
-}
+// using objectStructure
+var cart = new ObjectStructure(items);
+cart.ApplyVisitor(discountVisitor);
+cart.ApplyVisitor(salesVisitor);
 
-Console.WriteLine("\n*List of directors with at least one movie.*");
-foreach (var director in dirWithAtLeastOneMovie)
-{
-    Console.WriteLine(director);
-}
-
-Console.WriteLine("\n*List of directors older than 30yo with at least one movie.*");
-foreach (var director in dirOver30WithAtLeastOneMovie)
-{
-    Console.WriteLine(director);
-}
-
-Console.WriteLine("\n*List of directors with 30yo or less with at least one movie.*");
-foreach (var director in dirLessThan30WithMovie)
-{
-    Console.WriteLine(director);
-}
-
-Console.WriteLine("\n*Movies Test*");
-foreach (var movie in movies)
-{
-    Console.WriteLine(movie);
-}
-
-// using NSpecification
-var directorsWithAtLeastOneMovie = new Spec<Director>(_ => _.Movies.Count >= 1);
-var directorsOver30Spec = new Spec<Director>(_ => _.Age > 30);
-
-var directorsOver30WithAtLeastOneMovieSpec = directorsWithAtLeastOneMovie & directorsOver30Spec;
-var directorsOver30WithOneMovie = directorsRepo.GetAll(directorsOver30WithAtLeastOneMovieSpec);
-
-Console.WriteLine("\n*NSPEC2: List of directors older than 30yo with at least one movie.*");
-foreach (var director in directorsOver30WithOneMovie)
-{
-    Console.WriteLine(director);
-}
-
-Console.WriteLine("\n*NSPEC2: List of directors older than 30yo with at least one movie.*");
-foreach (var director in entities.Where(Director.OverAgeWithAtLeastMoviesQty(30, 1)))
-{
-    Console.WriteLine(director);
-}
-
-Console.WriteLine("\n*NSPEC2: List of directors older than 30yo with at least one movie.*");
-foreach (var director in entities.Where(DirectorSpecs.OverAgeWithAtLeastMoviesQty(30, 1)))
-{
-    Console.WriteLine(director);
-}
 
 Console.ReadKey();
+
+#endregion
+
+#endregion

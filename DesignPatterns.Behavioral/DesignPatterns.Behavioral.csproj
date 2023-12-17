@@ -15,7 +15,6 @@
     <Folder Include="Observer\" />
     <Folder Include="Strategy\" />
     <Folder Include="State\" />
-    <Folder Include="Visitor\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -398,7 +398,7 @@ Console.ReadKey();*/
 #endregion
 
 #region OBSERVER SIMPLE
-
+/*
 using DesignPatterns.Behavioral.Observer;
 
 Console.Title = "Observer";
@@ -415,11 +415,11 @@ orderService.AddObserver(ticketResellerService);
 orderService.CompleteTicketSale(1, 55);
 
 Console.ReadKey();
-
+*/
 #endregion
 
 #region OBSERVER - MICROSOFT
-
+/*
 // https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern
 
 var subject = new BaggageHandler();
@@ -440,6 +440,25 @@ observer2.Unsubscribe();
 
 subject.BaggageStatus(400);
 subject.LastBaggageClaimed();
+*/
+#endregion
+
+#region STRATEGY
+
+using DesignPatterns.Behavioral.Strategy;
+
+var calculadorDeImpostos = new CalculadorImpostos();
+var orcamento = new Orcamento(100);
+var icms = new Icms();
+var iss = new Iss();
+
+var impostoIcms = calculadorDeImpostos.Calcula(orcamento, icms);
+var impostoIss = calculadorDeImpostos.Calcula(orcamento, iss);
+
+Console.WriteLine($"Imposto ICMS: {impostoIcms}");
+Console.WriteLine($"Imposto ISS: {impostoIss}");
+
+Console.ReadKey();
 
 #endregion
 

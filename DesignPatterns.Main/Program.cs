@@ -363,37 +363,83 @@ Console.ReadKey();*/
 
 #region VISITOR
 
-using DesignPatterns.Behavioral.Visitor;
+//using DesignPatterns.Behavioral.Visitor;
 
-var items = new List<IVisitableElement>
-{
-    new Book(1, 11.99),
-    new Book(2, 22.79),
-    new Vinyl(3, 17.99),
-    new Book(4, 9.79),
-};
+//var items = new List<IVisitableElement>
+//{
+//    new Book(1, 11.99),
+//    new Book(2, 22.79),
+//    new Vinyl(3, 17.99),
+//    new Book(4, 9.79),
+//};
 
-var discountVisitor = new DiscountVisitor();
-var salesVisitor = new SalesVisitor();
+//var discountVisitor = new DiscountVisitor();
+//var salesVisitor = new SalesVisitor();
 
-foreach (var item in items)
-{
-    item.Accept(discountVisitor);
-    item.Accept(salesVisitor);
-}
+//foreach (var item in items)
+//{
+//    item.Accept(discountVisitor);
+//    item.Accept(salesVisitor);
+//}
 
-discountVisitor.Print();
-salesVisitor.Print();
+//discountVisitor.Print();
+//salesVisitor.Print();
 
-Console.WriteLine();
+//Console.WriteLine();
 
-// using objectStructure
-var cart = new ObjectStructure(items);
-cart.ApplyVisitor(discountVisitor);
-cart.ApplyVisitor(salesVisitor);
+//// using objectStructure
+//var cart = new ObjectStructure(items);
+//cart.ApplyVisitor(discountVisitor);
+//cart.ApplyVisitor(salesVisitor);
 
+
+//Console.ReadKey();
+
+#endregion
+
+#region OBSERVER SIMPLE
+
+using DesignPatterns.Behavioral.Observer;
+
+Console.Title = "Observer";
+
+var ticketStockService = new TicketStockService();
+var ticketResellerService = new TicketResellerService();
+var orderService = new OrderService();
+
+// add two observers
+orderService.AddObserver(ticketStockService);
+orderService.AddObserver(ticketResellerService);
+
+// notify
+orderService.CompleteTicketSale(1, 55);
 
 Console.ReadKey();
+
+#endregion
+
+#region OBSERVER - MICROSOFT
+
+// https://learn.microsoft.com/en-us/dotnet/standard/events/observer-design-pattern
+
+var subject = new BaggageHandler();
+var observer1 = new ArrivalsMonitor("BaggageClaimMonitor1");
+var observer2 = new ArrivalsMonitor("SecurityExit");
+
+subject.BaggageStatus(712, "Detroit", 3);
+observer1.Subscribe(subject);
+
+subject.BaggageStatus(712, "Kalamazoo", 3);
+subject.BaggageStatus(400, "New York-Kennedy", 1);
+subject.BaggageStatus(712, "Detroit", 3);
+observer2.Subscribe(subject);
+
+subject.BaggageStatus(511, "San Francisco", 2);
+subject.BaggageStatus(712);
+observer2.Unsubscribe();
+
+subject.BaggageStatus(400);
+subject.LastBaggageClaimed();
 
 #endregion
 

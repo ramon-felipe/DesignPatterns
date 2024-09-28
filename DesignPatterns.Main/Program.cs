@@ -444,21 +444,35 @@ subject.LastBaggageClaimed();
 #endregion
 
 #region STRATEGY
-
+/*
 using DesignPatterns.Behavioral.Strategy;
 
-var calculadorDeImpostos = new CalculadorImpostos();
-var orcamento = new Orcamento(100);
+var calculadorDeImpostos = new TaxCalculator();
+var orcamento = new Budget(100);
 var icms = new Icms();
 var iss = new Iss();
 
-var impostoIcms = calculadorDeImpostos.Calcula(orcamento, icms);
-var impostoIss = calculadorDeImpostos.Calcula(orcamento, iss);
+var impostoIcms = calculadorDeImpostos.Calculate(orcamento, icms);
+var impostoIss = calculadorDeImpostos.Calculate(orcamento, iss);
 
 Console.WriteLine($"Imposto ICMS: {impostoIcms}");
 Console.WriteLine($"Imposto ISS: {impostoIss}");
 
 Console.ReadKey();
+*/
+
+#endregion
+
+#region STATE
+
+using DesignPatterns.Behavioral.Strategy;
+
+var budget = new Budget(100);
+budget.Approve();
+
+var budget2 = new Budget(100);
+budget2.Disapprove();
+budget2.Cancel();
 
 #endregion
 

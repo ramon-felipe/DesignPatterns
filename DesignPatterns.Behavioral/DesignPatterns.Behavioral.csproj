@@ -12,8 +12,6 @@
     <Folder Include="ChainOfResponsibility\" />
     <Folder Include="Mediator\" />
     <Folder Include="TemplateMethod\" />
-    <Folder Include="Strategy\" />
-    <Folder Include="State\" />
   </ItemGroup>
 
   <ItemGroup>

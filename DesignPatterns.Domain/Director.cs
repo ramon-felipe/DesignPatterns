@@ -14,12 +14,15 @@ public class Director : Entity
         return $"Name: {this.Name}, Age: {this.Age}";
     }
 
+
+    // Specs as static properties and methods in the same class using DDD approach
     public static readonly ASpec<Director> Over30YearsOld = new Spec<Director>(_ => _.Age > 30);
     public static ASpec<Director> OverAge(int age) => new Spec<Director>(_ => _.Age > age);
     public static ASpec<Director> HasAtLeastQtyMovies(int moviesQty) => new Spec<Director>(_ => _.Movies.Count >= moviesQty);
     public static ASpec<Director> OverAgeWithAtLeastMoviesQty(int age, int moviesQty) => OverAge(age) & HasAtLeastQtyMovies(moviesQty);
 }
 
+// Specs as static methods in a separate class
 public static class DirectorSpecs
 {
     public static ASpec<Director> OverAge(int age) => new Spec<Director>(_ => _.Age > age);

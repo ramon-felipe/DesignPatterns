@@ -4,7 +4,8 @@ using System.Linq.Expressions;
 
 namespace DesignPatterns.Infrastructure;
 
-public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : Domain.Entity
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> 
+    where TEntity : Domain.Entity
 {
     protected readonly AppDbContext dbContext;
     protected readonly DbSet<TEntity> dbSet;

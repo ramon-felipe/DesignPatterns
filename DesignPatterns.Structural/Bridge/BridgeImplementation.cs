@@ -6,7 +6,7 @@
         public string AppName { get; }
         public DateTime PurchaseDate { get; }
 
-        public AppLicense(string appName)
+        protected AppLicense(string appName)
         {
             this.AppName = appName;
             this.PurchaseDate = DateTime.Now;
@@ -18,9 +18,8 @@
 
 
     // Refined Abstraction
-    public class OneWeekLicense : AppLicense
+    public class OneWeekLicense(string appName) : AppLicense(appName)
     {
-        public OneWeekLicense(string appName) : base(appName) { }
         public override decimal GetPrice()
             => 5;
 
@@ -29,9 +28,8 @@
     }
 
     // Refined Abstraction
-    public class NoExpirationLicense : AppLicense
+    public class NoExpirationLicense(string appName) : AppLicense(appName)
     {
-        public NoExpirationLicense(string appName) : base(appName) { }
         public override decimal GetPrice()
             => 50;
 
@@ -39,81 +37,65 @@
             => DateTime.MaxValue;
     }
 
-    public class SeniorOneWeekLicense : OneWeekLicense
+    public class SeniorOneWeekLicense(string appName) : OneWeekLicense(appName)
     {
-        public SeniorOneWeekLicense(string appName) : base(appName) { }
-
         public override decimal GetPrice() => 
             base.GetPrice() * 0.95m; // gives 5% of discount
     }
 
-    public class StudentOneWeekLicense : OneWeekLicense
+    public class StudentOneWeekLicense(string appName) : OneWeekLicense(appName)
     {
-        public StudentOneWeekLicense(string appName) : base(appName) { }
-
         public override decimal GetPrice() =>
             base.GetPrice() * 0.95m; // gives 5% of discount
     }
 
-    public class SeniorNoExpirationLicense : NoExpirationLicense
+    public class SeniorNoExpirationLicense(string appName) : NoExpirationLicense(appName)
     {
-        public SeniorNoExpirationLicense(string appName) : base(appName) { }
-
         public override decimal GetPrice() =>
             base.GetPrice() * 0.90m; // gives 10% of discount
     }
 
-    public class StudentNoExpirationLicense : NoExpirationLicense
+    public class StudentNoExpirationLicense(string appName) : NoExpirationLicense(appName)
     {
-        public StudentNoExpirationLicense(string appName) : base(appName) { }
-
         public override decimal GetPrice() =>
             base.GetPrice() * 0.90m; // gives 10% of discount
     }
 
     // Implementor
-    public abstract class Discount
+    public interface IDiscount
     {
-        public abstract decimal GetDiscount(decimal value);
+        decimal GetDiscount(decimal value);
     }
 
-    public class NoDiscount : Discount
+    public class NoDiscount : IDiscount
     {
-        public override decimal GetDiscount(decimal value) => 0m;        
+        public decimal GetDiscount(decimal value) => 0m;        
     }
 
-    public class SeniorDiscount : Discount
+    public class SeniorDiscount : IDiscount
     {
-        public override decimal GetDiscount(decimal value) => value * .05m;
+        public decimal GetDiscount(decimal value) => value * .05m;
     }
 
-    public class StudentDiscount : Discount
+    public class StudentDiscount : IDiscount
     {
-        public override decimal GetDiscount(decimal value) => value * .10m;
+        public decimal GetDiscount(decimal value) => value * .10m;
     }
 
     // Abstraction
-    public abstract class NewAppLicense
+    public abstract class NewAppLicense(string appName, IDiscount discount)
     {
-        public string AppName { get; }
-        public DateTime PurchaseDate { get; }
-        protected readonly Discount _discount;
-
-        public NewAppLicense(string appName, Discount discount)
-        {
-            this.AppName = appName;
-            this.PurchaseDate = DateTime.Now;
-            this._discount = discount;
-        }
+        public string AppName { get; } = appName;
+        public DateTime PurchaseDate { get; } = DateTime.Now;
+        protected readonly IDiscount _discount = discount;
 
         public abstract decimal GetPrice();
         public abstract DateTime GetExpirationDate();
     }
 
     // Refined Abstractions
-    public class NewOneWeekLicense : NewAppLicense
+    public class NewOneWeekLicense(string appName, IDiscount discount) : NewAppLicense(appName, discount)
     {
-        public NewOneWeekLicense(string appName, Discount discount) : base(appName, discount) { }
         public override decimal GetPrice()
         {
             decimal price = 5;
@@ -125,9 +107,8 @@
     }
 
 
-    public class NewNoExpirationLicense : NewAppLicense
+    public class NewNoExpirationLicense(string appName, IDiscount discount) : NewAppLicense(appName, discount)
     {
-        public NewNoExpirationLicense(string appName, Discount discount) : base(appName, discount) { }
         public override decimal GetPrice()
         {
             decimal price = 50;

@@ -45,7 +45,7 @@ public class TicketStockService : ITicketChangeListener
 /// </summary>
 public abstract class TicketChangeNotifier
 {
-    private readonly List<ITicketChangeListener> _observers = new();
+    private readonly List<ITicketChangeListener> _observers = [];
 
     public void AddObserver(ITicketChangeListener observer)
     {

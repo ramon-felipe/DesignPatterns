@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DesignPatterns.Creational.Factory
+﻿namespace DesignPatterns.Creational.Factory
 {
     public abstract class Car
     {
-        public Car()
+        protected Car()
         {
             Console.WriteLine("Creating a car...");
         }

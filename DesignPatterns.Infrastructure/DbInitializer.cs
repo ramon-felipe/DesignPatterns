@@ -2,14 +2,9 @@
 
 namespace DesignPatterns.Infrastructure;
 
-public class DbInitializer
+public class DbInitializer(AppDbContext context)
 {
-    private readonly AppDbContext dbContext;
-
-    public DbInitializer(AppDbContext context)
-    {
-        dbContext = context;
-    }
+    private readonly AppDbContext dbContext = context;
 
     public void Run()
     {

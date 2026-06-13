@@ -1,65 +1,84 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DesignPatterns.Creational.Prototype
+namespace DesignPatterns.Creational.Prototype;
+
+public interface ICloneable<out T>
 {
-    public interface ICloneable<T>
+    /// <summary>
+    /// Uses the MemberwiseClone method to create a shallow copy of the current object.
+    /// Shallow copy means that the new object will have the same values for its fields, but if any of those fields are reference types (like objects), they will point to the same memory location as the original object. 
+    /// Therefore, changes to those reference type fields in either the original or the cloned object will affect both objects.
+    /// </summary>
+    /// <returns></returns>
+    T Clone();
+
+    /// <summary>
+    /// Creates a deep copy of the current object. 
+    /// A deep copy means that all objects are duplicated, and the new object is completely independent of the original.
+    /// </summary>
+    /// <returns></returns>
+    T DeepClone();
+}
+
+public interface IPerson
+{
+    string Name { get; set; }
+}
+
+public class Teacher : IPerson
+{
+    public string Name { get; set; }
+    public Manager Manager { get; private set; }
+
+    public Teacher(string name, Manager manager)
     {
-        T Clone();
-        T DeepClone();
+        this.Name = name;
+        this.Manager = manager;
     }
 
-    public abstract class Person
+    public Teacher(Teacher other)
     {
-        public abstract string Name { get; set; }
+        this.Name = other.Name;
+        this.Manager = new Manager(other.Manager.Name);
+    }
+}
+
+public class Manager(string name) : IPerson, ICloneable<Manager>
+{
+    public string Name { get; set; } = name;
+
+    public Manager Clone()
+    {
+        return (Manager)MemberwiseClone();
     }
 
-    public class Manager : Person, ICloneable<Manager>
+    public Manager DeepClone()
     {
-        public Manager(string name)
-        {
-            Name = name;
-        }
+        if (this == null)
+            throw new ArgumentNullException(this.GetType().Name, "The object to clone cannot be null.");
 
-        public override string Name { get; set; }
+        var objAsJson = JsonConvert.SerializeObject(this);
+        return JsonConvert.DeserializeObject<Manager>(objAsJson)!;
+    }
+}
 
-        public Manager Clone()
-        {
-            return (Manager)MemberwiseClone();
-        }
+public class Employee(string name, Manager manager) : IPerson, ICloneable<Employee>
+{
+    public string Name { get; set; } = name;
+    public Manager Manager { get; } = manager;
 
-        public Manager DeepClone()
-        {
-            var objAsJson = JsonConvert.SerializeObject(this);
-            return JsonConvert.DeserializeObject<Manager>(objAsJson);
-        }
+    public Employee Clone()
+    {
+        return (Employee)MemberwiseClone();
     }
 
-    public class Employee : Person, ICloneable<Employee>
+    public Employee DeepClone()
     {
-        public Employee(string name, Manager manager)
-        {
-            Name = name;
-            Manager = manager;
-        }
+        if (this == null)
+            throw new ArgumentNullException(this.GetType().Name, "The object to clone cannot be null.");
 
-        public override string Name { get; set; }
-        public Manager Manager { get; }
-
-        public Employee Clone()
-        {
-            return (Employee)MemberwiseClone();
-        }
-
-        public Employee DeepClone()
-        {
-            var objAsJson = JsonConvert.SerializeObject(this);
-            return JsonConvert.DeserializeObject<Employee>(objAsJson);
-        }
-
+        var objAsJson = JsonConvert.SerializeObject(this);
+        return JsonConvert.DeserializeObject<Employee>(objAsJson)!;
     }
+
 }

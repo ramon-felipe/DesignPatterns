@@ -1,17 +1,10 @@
 ﻿namespace DesignPatterns.Creational.Builder
 {
-    public class Car
+    public class Car(int doorsQty, int maxSpeed, string color)
     {
-        public int DoorsQty { get; }
-        public int MaxSpeed { get; }
-        public string Color { get; }
-
-        public Car(int doorsQty, int maxSpeed, string color)
-        {
-            DoorsQty = doorsQty;
-            MaxSpeed = maxSpeed;
-            Color = color;
-        }
+        public int DoorsQty { get; } = doorsQty;
+        public int MaxSpeed { get; } = maxSpeed;
+        public string Color { get; } = color;
 
         public override string ToString() =>
             $"This is a {Color} car with {DoorsQty} doors that runs up to {MaxSpeed} km/h";
